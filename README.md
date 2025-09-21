@@ -1,6 +1,6 @@
 ﻿# Napkin MCP Server (Unofficial)
 
-![Project Thumbnail](./imgs/thumbnail.svg)
+<img style="max-width=100%;" src="./imgs/thumbnail.svg"/>
 
 An MCP (Model Context Protocol) server that wraps the Napkin API (create/status/download) in a spec-driven way. 
 It follows the split specs under `docs/specs/` (Types/Tools/Error Model) and uses Zod to define and publish strict input/output schemas.
