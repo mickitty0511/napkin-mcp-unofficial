@@ -10,14 +10,14 @@
     "dist",
     "README",
     "LICENSE",
-    "docs/mcp-reference"
+    "docs/mcp-reference",
+    "imgs/thumbnail.svg"
   ],
   "keywords": [
     "mcp",
     "napkin-ai",
     "genai",
-    "unofficial",
-    "img"
+    "unofficial"
   ],
   "author": "mickitty0511",
   "bin": {
