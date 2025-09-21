@@ -32,7 +32,7 @@ You can request a waitlist entry by following the procedures written in https://
 ## Install & Run
 ```bash
 # Install Globally
-npm install -g napkin-mcp-unofficial
+npm install -g napkin-mcp-unofficial@latest
 
 # Build->Run
 npm run build
