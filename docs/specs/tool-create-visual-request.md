@@ -100,7 +100,7 @@ export const CreateVisualOutputZ = z.object({
 - If both width and height are provided, width takes precedence; the other dimension is inferred.
 - Orientation may take priority over query selection.
 - visual_id / visual_ids are handled by a separate Regenerate tool; see `tool-regenerate-visual.md`.
-- Method selection: Change structure (keep content) 竊・use this Create tool. Change content-only (keep layout) 竊・use `napkin.regenerate_visual`.
+- Method selection: Change structure (keep content)  Euse this Create tool. Change content only (keep layout)  Euse `napkin.regenerate_visual`.
 
 ### Query & Style Guidance (MCP behavior)
 - visual_query / visual_queries
@@ -152,6 +152,7 @@ message: The responsibilities, constraints, and flow align with the documented i
 - visual_queries cardinality: when `number_of_visuals = 3`, `visual_queries.length` must be 3; mismatch errors.
 - Dimensions bounds: `width`/`height` must be integers in [100, 10000]; 99 and 10001 rejected; `null` accepted.
 - Orientation enum: accept only `auto|horizontal|vertical|square`; others rejected.
-- Style id handling: trims whitespace; when omitted, implementation may auto-select per precedence (env → explicit hint → formal fallback).
+- Style id handling: trims whitespace; when omitted, implementation may auto-select per precedence (env explicit hint, formal fallback).
 - POST payload: includes resolved `style_id`; response maps to `CreateVisualOutputZ`.
 - statusUrl: when `id` present, `statusUrl` is a valid URL built from base + `/v1/visual/{id}/status`.
+

@@ -113,7 +113,7 @@ export const RegenerateVisualOutputZ = z.object({
 - `width/height` affect PNG conversion only; SVG scales naturally.
 - Validation: If `format` is not `png`, providing `width` or `height` is rejected.
 - `style_id` is optional; server may select a default if omitted. Our implementation may auto-pick a style if none is provided.
-- Method selection: Change content-only (keep layout) → use this Regenerate tool. Change structure (keep content) → use `napkin.create_visual_request`.
+- Method selection: Change content-only (keep layout) use this Regenerate tool. Change structure (keep content) use `napkin.create_visual_request`.
 
 ## AI-Assisted Development Artifact
 
@@ -140,3 +140,4 @@ message: The separation clarifies create vs. regenerate responsibilities while p
 - Dimensions/orientation/language: same bounds and enums as Create; invalid values rejected.
 - Style selection: trims provided `style_id`; when omitted, implementation may auto-select per precedence.
 - POST payload/response: mapped into `RegenerateVisualOutputZ`; `statusUrl` constructed when `id` present.
+

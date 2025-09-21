@@ -2,13 +2,13 @@
 
 ![Project Thumbnail](imgs/thumbnail.svg)
 
-An MCP (Model Context Protocol) server that wraps the Napkin API (create/status/download) in a spec窶租riven way. 
+An MCP (Model Context Protocol) server that wraps the Napkin API (create/status/download) in a spec-driven way. 
 It follows the split specs under `docs/specs/` (Types/Tools/Error Model) and uses Zod to define and publish strict input/output schemas.
 
-> 笞・・Disclaimer: 
+> ⚠️・Disclaimer: 
 This project is an unofficial community project and is not affiliated with, endorsed by, nor sponsored by Napkin AI. 
 Napkin AI and any related marks are the property of their respective owners. 
-Use of the Napkin API must comply with Napkin AI窶冱 Terms of Service, rate limits, and branding guidelines.
+Use of the Napkin API must comply with Napkin AI's Terms of Service, rate limits, and branding guidelines.
 
 ## Features
 - Exposes Napkin as MCP tools (usable synchronously)
@@ -17,7 +17,7 @@ Use of the Napkin API must comply with Napkin AI窶冱 Terms of Service, rate li
   - `napkin_get_visual_status` (GET /v1/visual/{id}/status)
   - `napkin_download_visual_file` (returns download guidance + headers only)
 - Zod schemas are published as JSON Schema via MCP `tools/list`
-- Reflects Napkin API considerations (Bearer auth, ~30窶僧inute URL expiry)
+- Reflects Napkin API considerations (Bearer auth, ~30 mins URL expiry)
 - HTTP client with timeout, retry, and exponential backoff
 - Unified error model (`BAD_REQUEST`, `UNAUTHORIZED`, `GONE`, `RATE_LIMITED`, `UPSTREAM_ERROR`, etc.)
 
@@ -25,7 +25,7 @@ Use of the Napkin API must comply with Napkin AI窶冱 Terms of Service, rate li
 - Node.js 18.17+
 - Napkin API key (`NAPKIN_API_KEY` env var) 
 
-> 笞・・Notes: 
+> ⚠️・Notes: 
 As of Sept. 21st, 2025, Napkin API key is under the closed Beta test, not everyone can get it.
 You can request a waitlist entry by following the procedures written in https://api.napkin.ai/#support
 
@@ -63,7 +63,7 @@ npm start
   - Create a new visual: provide only one of `visual_query` | `visual_queries`
   - Regenerate same-structured visuals with different texts: provide exactly one of `visual_id` | `visual_ids`
 
-- Single窶訴d implies single output
+- Single id implies single output
   - `visual_id` (Regenerate) requires `number_of_visuals = 1`
   - Create a new visual requires `number_of_visuals = 1`
    
@@ -81,7 +81,7 @@ npm start
   - If both `width` and `height` are provided, `width` takes precedence and the other dimension is inferred
 
 - Style fallback
-  - `style_id` is optional; if omitted, a style is auto窶壮elected from the internal catalog
+  - `style_id` is optional; if omitted, a style is auto-selected from the internal catalog
   - Override default via `NAPKIN_DEFAULT_STYLE_ID`
 
 - Visual download URL expiry
@@ -115,7 +115,7 @@ tsconfig.json              # TypeScript config
 
 ## MCP Integration
 
-This server runs over stdio and works with both Claude Code (MCP窶粗nabled environments) and Codex CLI.
+This server runs over stdio and works with both Claude Code (MCP enabled environments) and Codex CLI.
 
 ### Claude Code (and other MCP clients)
 - Configure a custom MCP server with:
@@ -141,7 +141,7 @@ This server runs over stdio and works with both Claude Code (MCP窶粗nabled env
 - Resources: local docs are exposed under the `napkin-docs:///` scheme (note the triple slash). Typical flow:
   - List resources  `napkin-docs://docs/specs/README.md`
   - Read related specs: `napkin-docs://docs/specs/types.md`, `napkin-docs://docs/specs/tool-create-visual-request.md`, etc.
-  - Then call tools in order: `napkin_create_visual_request` or `napkin_regenerate_visual` 竊・`napkin_get_visual_status` 竊・`napkin_download_visual_file`
+  - Then call tools in order: `napkin_create_visual_request` or `napkin_regenerate_visual`, `napkin_get_visual_status`, `napkin_download_visual_file`
 
 ### Codex CLI
 - Edit `c:\Users\<you>\.codex\config.toml` and add:
@@ -159,7 +159,7 @@ This server runs over stdio and works with both Claude Code (MCP窶粗nabled env
 - Reload Codex CLI; you should see `napkin` in the MCP servers list.
 - Recommended usage flow in a Codex session:
   - Read docs via resources: `napkin-docs://docs/specs/README.md` and the other spec files
-  - Call `napkin_create_visual_request` (new) or `napkin_regenerate_visual` (update) 竊・poll with `napkin_get_visual_status`
+  - Call `napkin_create_visual_request` (new) or `napkin_regenerate_visual` (update) , poll with `napkin_get_visual_status`
   - Use `napkin_download_visual_file` to download imgs
 
 ## Contributing

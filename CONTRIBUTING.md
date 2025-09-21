@@ -61,10 +61,10 @@ This directory holds the split specifications for the Napkin MCP toolset. Please
 
 ### Prompt/Instruction Style
 
-- Use positive, imperative phrasing only (禁止: 否定形). 例: 「PNG のときに width を指定する」(良) / 「PNG 以外では width を指定しない」(不可)。
-- シンプル・明確・具体的に。短い文で一意に理解できるように書く。
-- 可能な限り能動態を使う（例: 「検証する」「返す」「選択する」）。
-- 許容値・既定値・範囲を明示する（曖昧語や二重否定を避ける）。
+- Write every instruction in positive, imperative form (e.g., `Specify width for PNG formats.`).
+- Keep language simple, clear, and specific with one idea per sentence.
+- Prefer active voice verbs such as `validate`, `return`, and `select`.
+- State allowed values, defaults, and ranges explicitly using unambiguous wording.
 
 ### Formatting & Data Conventions
 - Arrays in config/data files: place one element per line for readability and clean diffs (e.g., keyword lists in `src/data/visual-query-keywords.ts`).

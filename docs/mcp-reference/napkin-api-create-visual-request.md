@@ -172,16 +172,16 @@ curl -X POST https://api.napkin.ai/v1/visual \
 - 201 Created
   - Description: Visual request created successfully.
   - Body (shape):
-    - `id`: string (uuid) 遯ｶ繝ｻRequest ID
-    - `status`: string 遯ｶ繝ｻOne of `pending`, `completed`, `failed`
-    - `request`: object 遯ｶ繝ｻEcho of request parameters (format, content, language, style_id, visual_id(s)/query(ies), transparent_background, inverted_color, number_of_visuals, orientation, width, height)
-    - `generated_files`: array[object] 遯ｶ繝ｻPresent when completed; each file includes:
-      - `url`: string (uri) 遯ｶ繝ｻDownload URL (expires after ~30 minutes and may require authentication headers)
-      - `visual_id`: string 遯ｶ繝ｻVisual identifier used for this file (if applicable)
-      - `visual_query`: string 遯ｶ繝ｻVisual query used (if applicable)
-      - `style_id`: string 遯ｶ繝ｻActual style used
-      - `width`: integer 遯ｶ繝ｻPixel width
-      - `height`: integer 遯ｶ繝ｻPixel height
+    - `id`: string (uuid) — Request ID
+    - `status`: string — One of `pending`, `completed`, `failed`
+    - `request`: object — Echo of request parameters (format, content, language, style_id, visual_id(s)/query(ies), transparent_background, inverted_color, number_of_visuals, orientation, width, height)
+    - `generated_files`: array[object] — Present when completed; each file includes:
+      - `url`: string (uri) — Download URL (expires after ~30 minutes and may require authentication headers)
+      - `visual_id`: string — Visual identifier used for this file (if applicable)
+      - `visual_query`: string — Visual query used (if applicable)
+      - `style_id`: string — Actual style used
+      - `width`: integer — Pixel width
+      - `height`: integer — Pixel height
 
 - 400 Bad Request
   - Description: Invalid request data. Includes `error` and `message`.
