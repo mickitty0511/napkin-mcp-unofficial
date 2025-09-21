@@ -1,6 +1,6 @@
 {
   "name": "napkin-mcp-unofficial",
-  "version": "0.1.0",
+  "version": "0.1.7",
   "type": "module",
   "description": "Unofficial MCP server for Napkin AI tools",
   "license": "MIT",
