@@ -26,8 +26,8 @@ export const RegenerateVisualInputShape = {
   transparent_background: z.boolean().default(false).optional(),
   inverted_color: z.boolean().default(false).optional(),
 
-  width: z.number().int().min(100).max(10_000).nullable().optional(),
-  height: z.number().int().min(100).max(10_000).nullable().optional(),
+  width: z.number().int().min(100).max(10000).nullable().optional(),
+  height: z.number().int().min(100).max(10000).nullable().optional(),
 
   orientation: OrientationZ.optional(),
 } satisfies Record<string, ZodTypeAny>;
@@ -87,9 +87,16 @@ export async function regenerateVisual(
   client: NapkinHttpClient,
   input: RegenerateVisualInput
 ): Promise<RegenerateVisualOutput> {
+  const providedLanguage = input.language?.trim();
+  const envLanguage = process.env.NAPKIN_DEFAULT_LANGUAGE?.trim() || undefined;
+  const language = providedLanguage ?? (envLanguage ? Bcp47Z.parse(envLanguage) : undefined);
   const style_id = input.style_id?.trim() ||
-    selectStyleId(input.content, { context: input.context ?? undefined, language: input.language });
-  const payload = { ...input, style_id };
+    selectStyleId(input.content, { context: input.context ?? undefined, language });
+  const payload = {
+    ...input,
+    style_id,
+    ...(language ? { language } : {}),
+  };
   const { json } = await client.post<any>("/v1/visual", payload);
   const id: string | undefined = json?.id;
   const statusUrl = id ? `${process.env.NAPKIN_API_BASE ?? "https://api.napkin.ai"}/v1/visual/${id}/status` : undefined;

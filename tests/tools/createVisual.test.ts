@@ -50,6 +50,15 @@ describe("createVisual", () => {
     expect(out.statusUrl).toBe("https://api.example.com//v1/visual/123e4567-e89b-12d3-a456-426614174000/status");
   });
 
+  it("uses NAPKIN_DEFAULT_LANGUAGE when language is omitted", async () => {
+    process.env.NAPKIN_DEFAULT_LANGUAGE = "ja-JP";
+    const { createVisual: create } = await import("../../src/tools/createVisual.js");
+    const client = { post: vi.fn(async () => ({ json: { id: "123e4567-e89b-12d3-a456-426614174000", status: "pending" } })) } as any;
+    await create(client, { format: "svg", content: "hello" } as any);
+    const payload = client.post.mock.calls[0][1];
+    expect(payload.language).toBe("ja-JP");
+  });
+
   it("trims provided style_id and uses default base when env missing", async () => {
     delete process.env.NAPKIN_API_BASE;
     const { createVisual: create } = await import("../../src/tools/createVisual.js");

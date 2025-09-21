@@ -11,7 +11,7 @@ import { registerDocsResources } from "./resources/docs.js";
 import { INSTRUCTIONS } from "./instructions.js";
 
 const server = new McpServer(
-  { name: "napkin-mcp-server-unofficial", version: "0.1.0" },
+  { name: "napkin-mcp-unofficial", version: "0.1.0" },
   { instructions: INSTRUCTIONS }
 );
 
@@ -133,6 +133,6 @@ async function start() {
 }
 
 start().catch((err) => {
-  console.error("Failed to start napkin-mcp-server-unofficial:", err);
+  console.error("Failed to start napkin-mcp-unofficial:", err);
   process.exit(1);
 });

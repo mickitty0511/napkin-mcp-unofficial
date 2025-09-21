@@ -80,8 +80,15 @@ export type CreateVisualOutput = z.infer<typeof CreateVisualOutputZ>;
 
 export async function createVisual(client: NapkinHttpClient, input: CreateVisualInput): Promise<CreateVisualOutput> {
   // Auto-select style_id when not provided
-  const style_id = input.style_id?.trim() || selectStyleId(input.content, { context: input.context ?? undefined, language: input.language });
-  const payload = { ...input, style_id };
+  const providedLanguage = input.language?.trim();
+  const envLanguage = process.env.NAPKIN_DEFAULT_LANGUAGE?.trim() || undefined;
+  const language = providedLanguage ?? (envLanguage ? Bcp47Z.parse(envLanguage) : undefined);
+  const style_id = input.style_id?.trim() || selectStyleId(input.content, { context: input.context ?? undefined, language });
+  const payload = {
+    ...input,
+    style_id,
+    ...(language ? { language } : {}),
+  };
   const { json } = await client.post<any>("/v1/visual", payload);
   const id: string | undefined = json?.id;
   const statusUrl = id ? `${process.env.NAPKIN_API_BASE ?? "https://api.napkin.ai"}/v1/visual/${id}/status` : undefined;

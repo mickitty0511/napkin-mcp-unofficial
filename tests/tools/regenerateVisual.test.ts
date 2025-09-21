@@ -1,5 +1,10 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { RegenerateVisualInputZ } from "../../src/tools/regenerateVisual.js";
+
+const ORIGINAL_ENV = { ...process.env };
+
+beforeEach(() => { Object.assign(process.env, ORIGINAL_ENV); });
+afterEach(() => { process.env = { ...ORIGINAL_ENV }; vi.resetModules(); vi.restoreAllMocks(); });
 
 describe("RegenerateVisualInputZ", () => {
   it("requires exactly one of visual_id or visual_ids", () => {
@@ -26,6 +31,15 @@ describe("RegenerateVisualInputZ", () => {
 });
 
 describe("regenerateVisual", () => {
+  it("uses NAPKIN_DEFAULT_LANGUAGE when language is omitted", async () => {
+    process.env.NAPKIN_DEFAULT_LANGUAGE = "en-GB";
+    const { regenerateVisual: regen } = await import("../../src/tools/regenerateVisual.js");
+    const client = { post: vi.fn(async () => ({ json: { id: "123e4567-e89b-12d3-a456-426614174000", status: "pending" } })) } as any;
+    await regen(client, { format: "svg", content: "hello", visual_id: "VID" } as any);
+    const payload = client.post.mock.calls[0][1];
+    expect(payload.language).toBe("en-GB");
+  });
+
   it("auto-selects style_id when omitted and builds statusUrl", async () => {
     vi.mock("../../src/tools/styleSelector.js", () => ({ selectStyleId: () => "STYLEX" }));
     const { regenerateVisual: regen } = await import("../../src/tools/regenerateVisual.js");

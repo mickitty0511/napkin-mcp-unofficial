@@ -12,7 +12,6 @@ export class NapkinHttpClient {
   private apiKey: string;
   private timeoutMs: number;
   private maxRetries: number;
-  private debugEnabled: boolean;
 
   constructor(opts: HttpClientOptions = {}) {
     this.baseUrl = (opts.baseUrl ?? process.env.NAPKIN_API_BASE ?? "https://api.napkin.ai").replace(/\/$/, "");
@@ -23,7 +22,6 @@ export class NapkinHttpClient {
     this.apiKey = key;
     this.timeoutMs = opts.timeoutMs ?? 20_000;
     this.maxRetries = Math.max(0, opts.maxRetries ?? 2);
-    this.debugEnabled = this.envTruthy(process.env.NAPKIN_HTTP_DEBUG);
   }
 
   private authHeaders(): Record<string, string> {
@@ -47,18 +45,12 @@ export class NapkinHttpClient {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), this.timeoutMs);
         try {
-          this.dlog(`HTTP -> ${method} ${url} (attempt ${attempt + 1}/${this.maxRetries + 1})`);
-          if (this.debugEnabled && body !== undefined) {
-            // Avoid dumping huge payloads; keep to ~500 chars
-            const payload = safeStringify(body);
-            this.dlog(`  body: ${truncate(payload, 500)}`);
-          }
           const res = await fetch(url, {
             method,
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
-              "User-Agent": "napkin-mcp-server-unofficial/0.1.0",
+              "User-Agent": "napkin-mcp-unofficial/0.1.0",
               ...this.authHeaders(),
             },
             body: body !== undefined ? JSON.stringify(body) : undefined,
@@ -78,21 +70,20 @@ export class NapkinHttpClient {
               try {
                 parsed = JSON.parse(text);
               } catch (parseErr) {
-                this.dlog(`JSON parse error: ${parseErr instanceof Error ? parseErr.message : String(parseErr)}`);
-                this.dlog(`Response text: ${truncate(text, 1000)}`);
-                this.dlog(`Content-Type: ${contentType}`);
-                throw parseErr;
+                const snippet = text.length > 200 ? text.slice(0, 200) + '...' : text;
+                const messageParts = [
+                  `Failed to parse JSON response from ${url}`,
+                  contentType ? `content-type: ${contentType}` : undefined,
+                  snippet ? `response snippet: ${snippet}` : undefined,
+                ].filter(Boolean);
+                const message = messageParts.join(" | ");
+                throw new Error(message, { cause: parseErr });
               }
             } else {
               parsed = { raw: text };
             }
           }
 
-          const reqId = hasGet ? (res as any).headers.get("x-request-id") ?? undefined : undefined;
-          this.dlog(`HTTP <- ${status} ${method} ${url}${reqId ? ` (x-request-id: ${reqId})` : ""}`);
-          if (this.debugEnabled && status >= 400) {
-            this.dlog(`  error body: ${truncate(text, 500)}`);
-          }
           const json = parsed as T;
 
           if (status >= 200 && status < 300) {
@@ -118,15 +109,9 @@ export class NapkinHttpClient {
             ? err.status === 429 || (err.status >= 500 && err.status < 600)
             : true;
         if (!retriable || attempt === this.maxRetries) {
-          this.dlog(
-            `HTTP xx ${method} ${url} failed (attempt ${attempt + 1}/${this.maxRetries + 1}) retriable=${retriable}: ${err instanceof Error ? err.name + ": " + err.message : String(err)}`
-          );
           throw err;
         }
         const backoffMs = this.backoff(attempt);
-        this.dlog(
-          `HTTP .. retrying ${method} ${url} in ${Math.round(backoffMs)}ms (attempt ${attempt + 2}/${this.maxRetries + 1})`
-        );
         await sleep(backoffMs);
       }
       attempt += 1;
@@ -140,18 +125,7 @@ export class NapkinHttpClient {
     return Math.min(5_000, base * 2 ** attempt + jitter);
   }
 
-  private envTruthy(v: string | undefined): boolean {
-    if (!v) return false;
-    const s = v.trim().toLowerCase();
-    return s === "1" || s === "true" || s === "yes" || s === "on";
-  }
 
-  private dlog(msg: string): void {
-    if (this.debugEnabled) {
-      // Single-line logs for easy grepping
-      console.log(`[napkin:http] ${msg}`);
-    }
-  }
 }
 
 export class NapkinHttpError<T = unknown> extends Error {
@@ -163,14 +137,3 @@ export class NapkinHttpError<T = unknown> extends Error {
   }
 }
 
-function truncate(s: string, max: number): string {
-  return s.length > max ? s.slice(0, max) + `… (truncated ${s.length - max} chars)` : s;
-}
-
-function safeStringify(v: unknown): string {
-  try {
-    return JSON.stringify(v);
-  } catch {
-    return String(v);
-  }
-}
