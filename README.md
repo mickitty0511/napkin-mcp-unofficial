@@ -7,8 +7,8 @@ It follows the split specs under `docs/specs/` (Types/Tools/Error Model) and use
 
 > ⚠️ Disclaimer: 
 This project is an unofficial community project and is not affiliated with, endorsed by, nor sponsored by Napkin AI. 
-Napkin and any related marks are the property of their respective owners. 
-Use of the Napkin API must comply with Napkin’s Terms of Service, rate limits, and branding guidelines.
+Napkin AI and any related marks are the property of their respective owners. 
+Use of the Napkin API must comply with Napkin AI’s Terms of Service, rate limits, and branding guidelines.
 
 ## Features
 - Exposes Napkin as MCP tools (usable synchronously)
@@ -26,28 +26,25 @@ Use of the Napkin API must comply with Napkin’s Terms of Service, rate limits,
 - Napkin API key (`NAPKIN_API_KEY` env var) 
 
 > ⚠️ Notes: 
-As of Sept. 18th, 2025, Napkin API key is under the closed Beta test, not everyone can get it.
+As of Sept. 21st, 2025, Napkin API key is under the closed Beta test, not everyone can get it.
 You can request a waitlist entry by following the procedures written in https://api.napkin.ai/#support
 
 ## Install & Run
 ```bash
-npm install
-
-# Dev (runs MCP server over stdio)
-NAPKIN_API_KEY=your_token_here npm run dev
+# Install Globally
+npm install -g napkin-mcp-unofficial
 
 # Build->Run
 npm run build
-NAPKIN_API_KEY=your_token_here npm start
+npm start
 ```
 
 - Optional base URL override: `NAPKIN_API_BASE` (default: `https://api.napkin.ai`).
-- Binary name: `napkin-mcp-server-unofficial` (equivalent to `node dist/index.js` after build).
+- Binary name: `napkin-mcp-unofficial` (equivalent to `node dist/index.js` after build).
 
 ## Specs & References
 | Document Name | Path / URL | Description |
 |---|---|---|
-| Spec index | `docs/specs/specs-all.txt` | Specification index |
 | Tool specs | `docs/specs/tool-*.md` | Tool specifications |
 | Type specs | `docs/specs/types*.md` | Type specifications |
 | Error model | `docs/specs/error-model.md` | Error model |
@@ -58,7 +55,7 @@ NAPKIN_API_KEY=your_token_here npm start
 | Download Generated File | `docs/napkin-api-download-visual-file.md` | Download generated file |
 | Styles | `docs/napkin-api-styles.md` | Styles catalog |
 | Changelog | `docs/napkin-api-changelog.md` | Change log |
-| Napkin site | https://api.napkin.ai/ | Official Napkin site |
+| Napkin AI API site | https://api.napkin.ai/ | Official Napkin site |
 
 ## API-related Constraints
 
@@ -122,37 +119,48 @@ This server runs over stdio and works with both Claude Code (MCP‑enabled envir
 
 ### Claude Code (and other MCP clients)
 - Configure a custom MCP server with:
-  - Command: `node`
-  - Args: `dist/index.js`
-  - CWD: your repo root
-  - Env: set `NAPKIN_API_KEY`
+  ```json
+  "mcpServers": {
+    "napkin-mcp-unofficial": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "napkin-mcp-unofficial"
+      ],
+      "env": {
+        "NAPKIN_API_KEY" : "YOUR_TOKEN",
+        "NAPKIN_DEFAULT_STYLE_ID" : "STYLE_ID",
+        "NAPKIN_DEFAULT_LANGUAGE" : "en-us"
+      }
+    }
+  }
+  ```
+- STYLE_ID setting is optional setting which is detailed on https://api.napkin.ai/docs/styles
+- NAPKIN_DEFAULT_LANGUAGE is optional. Set your default/preferred language. Its value should be at [BCP47](https://r12a.github.io/app-subtags/) format. This setting is set for text/labels on Napkin images.
 - On connect, the server publishes instructions that guide the model to read local docs before using tools.
 - Resources: local docs are exposed under the `napkin-docs:///` scheme (note the triple slash). Typical flow:
   - List resources  `napkin-docs://docs/specs/README.md`
   - Read related specs: `napkin-docs://docs/specs/types.md`, `napkin-docs://docs/specs/tool-create-visual-request.md`, etc.
-  - Then call tools in order: `napkin_create_visual_request` or `napkin_regenerate_visual` → `napkin_get_visual_status` → `napkin_download_visual_file` (advisory).
+  - Then call tools in order: `napkin_create_visual_request` or `napkin_regenerate_visual` → `napkin_get_visual_status` → `napkin_download_visual_file`
 
 ### Codex CLI
 - Edit `c:\Users\<you>\.codex\config.toml` and add:
   ```toml
   [mcp_servers.napkin]
   command = "node"
-  args = ["dist/index.js"]
-  cwd = "c:\\Users\\<you>\\Desktop\\dev\\napkin-ai"
+  args = ["C:<napkin-mcp-unofficial-installed directory>/dist/index.js"]
 
   [mcp_servers.napkin.env]
   NAPKIN_API_KEY = "YOUR_TOKEN"
+  NAPKIN_DEFAULT_STYLE_ID = "STYLE_ID" # Reference https://api.napkin.ai/docs/styles
+  NAPKIN_DEFAULT_LANGUAGE = "en-us" Your preferred/default language should be set for text on Napkin imgs
+  
   ```
 - Reload Codex CLI; you should see `napkin` in the MCP servers list.
 - Recommended usage flow in a Codex session:
   - Read docs via resources: `napkin-docs://docs/specs/README.md` and the other spec files
   - Call `napkin_create_visual_request` (new) or `napkin_regenerate_visual` (update) → poll with `napkin_get_visual_status`
-  - Use `napkin_download_visual_file` to get the header guidance for downloading
-
-
-## Dev Tips
-- After changing schemas, rebuild and have the client refresh `tools/list` to pick up updated JSON Schemas.
-- On network/auth failures, tools return `isError: true` with a structured error. If your client has retry logic, consult the `retriable` flag.
+  - Use `napkin_download_visual_file` to download imgs
 
 ## Contributing
 

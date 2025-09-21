@@ -2,7 +2,7 @@
 
 Use these English keywords as search terms for `visual_query` / `visual_queries` when guiding the Napkin layout selection. The first item of each category is a good canonical query string.
 
-This is based on available options from "Customize" visuals options on Napkin AI site, as of Sept 18th, 2025. 
+This is based on available options from "Customize" visuals options on Napkin AI site, as of Sept 21st, 2025. 
 
 ```yaml
 language: en
