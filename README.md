@@ -1,11 +1,11 @@
 ﻿# Napkin MCP Server (Unofficial)
 
-![Project Thumbnail](imgs/thumbnail.svg)
+![Project Thumbnail](./imgs/thumbnail.svg)
 
 An MCP (Model Context Protocol) server that wraps the Napkin API (create/status/download) in a spec-driven way. 
 It follows the split specs under `docs/specs/` (Types/Tools/Error Model) and uses Zod to define and publish strict input/output schemas.
 
-> ⚠️・Disclaimer: 
+> ⚠️ Disclaimer: 
 This project is an unofficial community project and is not affiliated with, endorsed by, nor sponsored by Napkin AI. 
 Napkin AI and any related marks are the property of their respective owners. 
 Use of the Napkin API must comply with Napkin AI's Terms of Service, rate limits, and branding guidelines.
@@ -25,7 +25,7 @@ Use of the Napkin API must comply with Napkin AI's Terms of Service, rate limits
 - Node.js 18.17+
 - Napkin API key (`NAPKIN_API_KEY` env var) 
 
-> ⚠️・Notes: 
+> ⚠️ Notes: 
 As of Sept. 21st, 2025, Napkin API key is under the closed Beta test, not everyone can get it.
 You can request a waitlist entry by following the procedures written in https://api.napkin.ai/#support
 
@@ -152,8 +152,10 @@ This server runs over stdio and works with both Claude Code (MCP enabled environ
 
   [mcp_servers.napkin.env]
   NAPKIN_API_KEY = "YOUR_TOKEN"
-  NAPKIN_DEFAULT_STYLE_ID = "STYLE_ID" # Reference https://api.napkin.ai/docs/styles
-  NAPKIN_DEFAULT_LANGUAGE = "en-us" Your preferred/default language should be set for text on Napkin imgs
+  # Reference https://api.napkin.ai/docs/styles
+  NAPKIN_DEFAULT_STYLE_ID = "STYLE_ID" 
+  # Your preferred/default language should be set for text on Napkin imgs
+  NAPKIN_DEFAULT_LANGUAGE = "en-us"  
   
   ```
 - Reload Codex CLI; you should see `napkin` in the MCP servers list.
