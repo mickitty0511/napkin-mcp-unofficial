@@ -1,4 +1,4 @@
-// Separate management of documentation, usage, and constraints, then combine them into a single INSTRUCTIONS export
+﻿// Separate management of documentation, usage, and constraints, then combine them into a single INSTRUCTIONS export
 
 // Prompt/Instruction style for agents
 const INSTRUCTIONS_STYLE = [
@@ -18,9 +18,9 @@ const INSTRUCTIONS_DOCS = [
   "- Refer to local docs under napkin-docs:// to understand tools and types.",
   "- Start with napkin-docs://docs/specs/README.md and related type/tool specs.",
   "- Key API docs:",
-  "    napkin-docs://docs/napkin-api-create-visual-request.md",
-  "    napkin-docs://docs/napkin-api-get-visual-request-status.md",
-  "    napkin-docs://docs/napkin-api-download-visual-file.md",
+  "    napkin-docs://docs/mcp-reference/napkin-api-create-visual-request.md",
+  "    napkin-docs://docs/mcp-reference/napkin-api-get-visual-request-status.md",
+  "    napkin-docs://docs/mcp-reference/napkin-api-download-visual-file.md",
 ].join("\n");
 
 // Reference how this MCP can do to make request happen 
@@ -51,7 +51,7 @@ const INSTRUCTIONS_USAGE = [
   "   - Accept 'language' as a BCP 47 string (e.g., en, en-US, ja-JP).",
   "   - Consult https://r12a.github.io/app-subtags/ when needed.",
   "   - If content/context indicates auto lookup (e.g., 'bcp47:auto' or 'language:auto'), pick an appropriate tag via the subtag lookup.",
-  "   - If language is omitted or environment variable NAPKIN_DEFAULT_LANGUAGE and content/context is different, propose 2–3 likely BCP 47 candidates from content/context and ask the user to confirm.",
+  "   - If language is omitted or environment variable NAPKIN_DEFAULT_LANGUAGE and content/context is different, propose 2窶・ likely BCP 47 candidates from content/context and ask the user to confirm.",
 ].join("\n");
 
 // Rendering / parameters behavior and caveats

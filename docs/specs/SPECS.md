@@ -9,10 +9,10 @@ This folder contains split specifications for the Napkin MCP toolset, derived fr
 - Processing flow and test considerations
 
 See also:
-- Create visual request: docs/napkin-api-create-visual-request.md
-- Get visual request status: docs/napkin-api-get-visual-request-status.md
-- Download generated file: docs/napkin-api-download-visual-file.md
-- Styles catalog: docs/napkin-api-styles.md
+- Create visual request: docs/mcp-reference/napkin-api-create-visual-request.md
+- Get visual request status: docs/mcp-reference/napkin-api-get-visual-request-status.md
+- Download generated file: docs/mcp-reference/napkin-api-download-visual-file.md
+- Styles catalog: docs/mcp-reference/napkin-api-styles.md
 
 ## Reference Links (original docs)
 
@@ -100,7 +100,7 @@ Note: If `style_id` is omitted, the server auto-selects a style from its interna
 
 ### Step 1 (Documentation)
 - Dependencies
-  - Local docs: `docs/napkin-api-*.md`
+  - Local docs: `docs/mcp-reference/napkin-api-*.md`
   - Spec files in this folder: types, tool specs, error model
   - MCP server runtime and JSON Schema publication via zod-to-json-schema
 - Responsibilities

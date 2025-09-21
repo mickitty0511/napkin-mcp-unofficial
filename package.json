@@ -7,6 +7,20 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README",
+    "LICENSE",
+    "docs/mcp-reference"
+  ],
+  "keywords": [
+    "mcp",
+    "napkin-ai",
+    "genai",
+    "unofficial",
+    "img"
+  ],
+  "author": "mickitty0511",
   "bin": {
     "napkin-mcp-unofficial": "dist/index.js"
   },

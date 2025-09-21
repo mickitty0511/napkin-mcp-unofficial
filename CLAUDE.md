@@ -4,9 +4,6 @@ This repo includes a specialized Claude agent for normalizing Napkin API docs to
 
 ## Roles
 
-- napkin-api-docs-md-author
-  - Spec: `.claude/agents/napkin-api-docs-md-author.md`
-  - Purpose: Convert local Docusaurus HTML/JS pages into canonical Markdown under `docs/`.
 
 ## Operating Procedure
 
@@ -15,10 +12,10 @@ This repo includes a specialized Claude agent for normalizing Napkin API docs to
    - Bundled JS referenced by the HTML (e.g., `/assets/js/main.*.js` + page chunks)
 
 2) Output Targets
-   - `docs/napkin-api-create-visual-request.md`
-   - `docs/napkin-api-get-visual-request-status.md`
-   - `docs/napkin-api-download-visual-file.md`
-   - `docs/napkin-api-styles.md`
+   - `docs/mcp-reference/napkin-api-create-visual-request.md`
+   - `docs/mcp-reference/napkin-api-get-visual-request-status.md`
+   - `docs/mcp-reference/napkin-api-download-visual-file.md`
+   - `docs/mcp-reference/napkin-api-styles.md`
 
 2.5) Test Cases in Specs
 - For each spec under `docs/specs/**`, include a `## Test Cases` section listing concrete valid/invalid/boundary cases. Keep these synchronized with unit tests under `tests/**`.
@@ -181,6 +178,5 @@ source_to_tests:
 
 ## References
 
-- Agent spec: `.claude/agents/napkin-api-docs-md-author.md`
 - Contributing: `CONTRIBUTING.md`
 - Agents guide: `AGENTS.md`

@@ -14,7 +14,7 @@ This directory holds the split specifications for the Napkin MCP toolset. Please
 - Tools: `docs/specs/tool-*.md` (e.g., `tool-create-visual-request.md`). H1 should be `Tool: <tool_name>`.
 - Error model: `docs/specs/error-model.md`.
 - Indexes: `docs/specs/types.md` and `docs/specs/README.md` (this folder index).
-- Reference sources: `docs/napkin-api-*.md`.
+- Reference sources: `docs/mcp-reference/napkin-api-*.md`.
 
 ## Section Style
 
@@ -181,7 +181,7 @@ source_to_tests:
 
 ## PR Checklist
 
-- Cite the source you used (e.g., `docs/napkin-api-*.md`).
+- Cite the source you used (e.g., `docs/mcp-reference/napkin-api-*.md`).
 - Link to corresponding code changes (types/schemas/tool registration) when applicable.
 - Update indexes and verify `npm run check` / `npm run build` / `npm run doc` all pass locally.
 - Run `npm run lint`; fix lint errors where appropriate (or include justification for exceptions).

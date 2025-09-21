@@ -11,13 +11,13 @@ This repository uses lightweight agent playbooks to keep documentation and code 
 ## Scope
 
 - Specs under `docs/specs/**` (types, tools, error model, index pages)
-- Canonical Markdown API docs under `docs/napkin-api-*.md`
+- Canonical Markdown API docs under `docs/mcp-reference/napkin-api-*.md`
 - Implementation under `src/**` (types, tools, server)
 
 ## Workflow
 
 1) Source of truth
-   - Prefer local API pages. Save as html on the browser, then let the agent convert it to `docs/napkin-api-*.md`.
+   - Prefer local API pages. Save as html on the browser, then let the agent convert it to `docs/mcp-reference/napkin-api-*.md`.
    - Do not invent fields or rename upstream snake_case identifiers.
 
 2) Edit specs
@@ -191,4 +191,3 @@ source_to_tests:
 
 - Contributing guide: `CONTRIBUTING.md`
 - Claude-specific playbook: `CLAUDE.md`
-- Specialized agent: `.claude/agents/napkin-api-docs-md-author.md`

@@ -71,7 +71,7 @@ export type StylesCatalog = z.infer<typeof StylesCatalogZ>;
 ```
 
 Notes
-- Source: https://api.napkin.ai/docs/styles (see `docs/napkin-api-styles.md` for a current snapshot).
+- Source: https://api.napkin.ai/docs/styles (see `docs/mcp-reference/napkin-api-styles.md` for a current snapshot).
 - `style_id` is optional in create requests; if omitted, an upstream default may be chosen.
 - MCP implementation selection precedence when `style_id` is omitted:
   1) `NAPKIN_DEFAULT_STYLE_ID` environment override (if set)
